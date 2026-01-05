@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>La Web</title>
+
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Comic Sans MS", cursive;
+      background: radial-gradient(circle at top, #ffe0f0 0, #fcefee 40%, #fff 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 10px 0 0;
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+      color: #ff5c7a;
+      text-shadow: 3px 3px 0 #fff, -1px -1px 0 #ffd1e1;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: #666;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      border-top: 4px dashed #ffd1e1;
+    }
+
+    .panel {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .panel-simi {
+      background: linear-gradient(135deg, #ffe9f0, #fff5d9);
+      border-right: 3px solid #ffb6c1;
+    }
+
+    .panel-modeun {
+      background: linear-gradient(135deg, #d9f3ff, #e9e9ff);
+      border-left: 3px solid #99c2ff;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-header img.avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.95);
+      box-shadow: 0 0 8px rgba(0,0,0,0.25);
+      background: #fff;
+    }
+
+    .panel-title {
+      font-size: 1.6rem;
+      text-shadow: 1px 1px 0 #fff;
+    }
+
+    .panel-header small {
+      display: block;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    .counter-box {
+      background: rgba(255,255,255,0.9);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .counter-label { font-weight: bold; font-size: 1rem; }
+
+    .counter-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #ff4081;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .counter-buttons button {
+      border: none;
+      border-radius: 10px;
+      padding: 6px 10px;
+      margin-left: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .btn-plus {
+      background: #7ed957;
+      color: #fff;
+      box-shadow: 0 2px 0 #4e9c35;
+    }
+
+    .btn-minus {
+      background: #ff9f68;
+      color: #fff;
+      box-shadow: 0 2px 0 #c96c35;
+    }
+
+    .counter-buttons button:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    }
+
+    .store {
+      background: rgba(255,255,255,0.9);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    }
+
+    .store-title {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+
+    .item-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .store-item {
+      border-radius: 12px;
+      border: 2px solid rgba(0,0,0,0.05);
+      padding: 8px;
+      background: #fff8fc;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+      font-size: 0.9rem;
+    }
+
+    .store-item strong { font-size: 1rem; }
+
+    .store-item .cost {
+      color: #ff4081;
+      font-weight: bold;
+    }
+
+    .store-item:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      background: #ffe9f7;
+    }
+
+    .history {
+      background: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .history-title {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .history-list {
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .history-list li {
+      padding: 3px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .history-empty {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .history-controls {
+      text-align: right;
+      margin-bottom: 4px;
+    }
+
+    .btn-clear {
+      border: none;
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      background: #ddd;
+      color: #333;
+      transition: background 0.15s;
+    }
+
+    .btn-clear:hover { background: #bbb; }
+
+    @media (max-width: 800px) {
+      .container { flex-direction: column; }
+      .panel-simi {
+        border-right: none;
+        border-bottom: 3px solid #ffb6c1;
+      }
+      .panel-modeun {
+        border-left: none;
+        border-top: 3px solid #99c2ff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>La Web</h1>
+  <p class="subtitle">Chiquipoints de Simi y Modeun</p>
+
+  <div class="container">
+    <!-- Panel Simi -->
+    <section class="panel panel-simi">
+      <div class="panel-header">
+        <img class="avatar" src="clarence.jpg" alt="Clarence / Simi" />
+        <div>
+          <div class="panel-title">Simi · Mundo Clarence</div>
+          <small>Haz clic en la tienda para canjear Chiquipoints</small>
+        </div>
+      </div>
+
+      <div class="counter-box">
+        <div class="counter-label">Chiquipoints de Simi:</div>
+        <div class="counter-value" id="simi-counter">0</div>
+        <div class="counter-buttons">
+          <button class="btn-plus" onclick="changePoints('simi', 1)">+1</button>
+          <button class="btn-minus" onclick="changePoints('simi', -1)">−1</button>
+        </div>
+      </div>
+
+      <div class="store">
+        <div class="store-title">Tienda de Simi</div>
+        <div class="item-list">
+          <button class="store-item"
+                  data-player="simi"
+                  data-cost="5"
+                  data-name="GGST 30 min">
+            <span><strong>GGST 30 min</strong></span>
+            <span class="cost">5 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="simi"
+                  data-cost="7"
+                  data-name="Splatoon 3 30 min">
+            <span><strong>Splatoon 3 30 min</strong></span>
+            <span class="cost">7 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="simi"
+                  data-cost="33"
+                  data-name="Calistenia 40 min">
+            <span><strong>Calistenia 40 min</strong></span>
+            <span class="cost">33 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="simi"
+                  data-cost="20"
+                  data-name="Paseo con sol 20 min">
+            <span><strong>Paseo con sol 20 min</strong></span>
+            <span class="cost">20 Chiquipoints</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="history">
+        <div class="history-controls">
+          <button class="btn-clear" onclick="clearHistory('simi')">Borrar historial</button>
+        </div>
+        <div class="history-title">Historial de Simi</div>
+        <ul class="history-list" id="simi-history"></ul>
+        <div class="history-empty" id="simi-history-empty">Todavía no hay compras.</div>
+      </div>
+    </section>
+
+    <!-- Panel Modeun -->
+    <section class="panel panel-modeun">
+      <div class="panel-header">
+        <img class="avatar" src="gumball.jpg" alt="Gumball / Modeun" />
+        <div>
+          <div class="panel-title">Modeun · Mundo Gumball</div>
+          <small>Haz clic en la tienda para canjear Chiquipoints</small>
+        </div>
+      </div>
+
+      <div class="counter-box">
+        <div class="counter-label">Chiquipoints de Modeun:</div>
+        <div class="counter-value" id="modeun-counter">0</div>
+        <div class="counter-buttons">
+          <button class="btn-plus" onclick="changePoints('modeun', 1)">+1</button>
+          <button class="btn-minus" onclick="changePoints('modeun', -1)">−1</button>
+        </div>
+      </div>
+
+      <div class="store">
+        <div class="store-title">Tienda de Modeun</div>
+        <div class="item-list">
+          <button class="store-item"
+                  data-player="modeun"
+                  data-cost="10"
+                  data-name="Monster Hunter">
+            <span><strong>Monster Hunter</strong></span>
+            <span class="cost">10 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="modeun"
+                  data-cost="8"
+                  data-name="Minecraft Dungeons">
+            <span><strong>Minecraft Dungeons</strong></span>
+            <span class="cost">8 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="modeun"
+                  data-cost="22"
+                  data-name="Anime nuevo 3h">
+            <span><strong>Anime nuevo 3h</strong></span>
+            <span class="cost">22 Chiquipoints</span>
+          </button>
+
+          <button class="store-item"
+                  data-player="modeun"
+                  data-cost="30"
+                  data-name="Juego nuevo 3h">
+            <span><strong>Juego nuevo 3h</strong></span>
+            <span class="cost">30 Chiquipoints</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="history">
+        <div class="history-controls">
+          <button class="btn-clear" onclick="clearHistory('modeun')">Borrar historial</button>
+        </div>
+        <div class="history-title">Historial de Modeun</div>
+        <ul class="history-list" id="modeun-history"></ul>
+        <div class="history-empty" id="modeun-history-empty">Todavía no hay compras.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Firebase + lógica en tiempo real -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUe4fZVAZipiuqFAPQCJ0FqOIrZJFE908",
+      authDomain: "la-web-d9f4e.firebaseapp.com",
+      databaseURL: "https://la-web-d9f4e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "la-web-d9f4e",
+      storageBucket: "la-web-d9f4e.firebasestorage.app",
+      messagingSenderId: "133048092874",
+      appId: "1:133048092874:web:b611c14e29651f23e44c33",
+      measurementId: "G-7FSVPK5QMP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // --- LECTORES EN TIEMPO REAL ---
+
+    // Puntos Simi
+    onValue(ref(db, "simi/points"), (snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      document.getElementById("simi-counter").textContent = val;
+    });
+
+    // Puntos Modeun
+    onValue(ref(db, "modeun/points"), (snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      document.getElementById("modeun-counter").textContent = val;
+    });
+
+    // Historial Simi
+    onValue(ref(db, "simi/history"), (snap) => {
+      const list = snap.exists() ? snap.val() : [];
+      renderHistory("simi", list);
+    });
+
+    // Historial Modeun
+    onValue(ref(db, "modeun/history"), (snap) => {
+      const list = snap.exists() ? snap.val() : [];
+      renderHistory("modeun", list);
+    });
+
+    // --- FUNCIONES DE PANTALLA ---
+
+    function renderHistory(player, history) {
+      const listId = player === "simi" ? "simi-history" : "modeun-history";
+      const emptyId = player === "simi" ? "simi-history-empty" : "modeun-history-empty";
+      const ul = document.getElementById(listId);
+      const empty = document.getElementById(emptyId);
+
+      ul.innerHTML = "";
+      if (!history || history.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      history.forEach((entry) => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.fecha} · ${entry.nombre} (-${entry.coste} puntos)`;
+        ul.appendChild(li);
+      });
+    }
+
+    function formatDate() {
+      const now = new Date();
+      const dia = String(now.getDate()).padStart(2, "0");
+      const mes = String(now.getMonth() + 1).padStart(2, "0");
+      const anio = now.getFullYear();
+      const hora = String(now.getHours()).padStart(2, "0");
+      const min = String(now.getMinutes()).padStart(2, "0");
+      return `${dia}/${mes}/${anio} ${hora}:${min}`;
+    }
+
+    // --- FUNCIONES QUE USA EL HTML (window.* para que existan en global) ---
+
+    async function getCurrentPoints(player) {
+      const snap = await get(child(ref(db), player + "/points"));
+      return snap.exists() ? snap.val() : 0;
+    }
+
+    async function getCurrentHistory(player) {
+      const snap = await get(child(ref(db), player + "/history"));
+      return snap.exists() ? snap.val() : [];
+    }
+
+    window.changePoints = async function(player, delta) {
+      let current = await getCurrentPoints(player);
+      current += delta;
+      if (current < 0) current = 0;
+      await set(ref(db, player + "/points"), current);
+    };
+
+    window.clearHistory = async function(player) {
+      if (!confirm("¿Seguro que quieres borrar el historial de " + player + "?")) return;
+      await set(ref(db, player + "/history"), []);
+    };
+
+    async function handlePurchaseInternal(player, cost, name) {
+      let current = await getCurrentPoints(player);
+      cost = parseInt(cost, 10);
+
+      if (current < cost) {
+        alert("No hay suficientes Chiquipoints para comprar \"" + name + "\".");
+        return;
+      }
+
+      current -= cost;
+      await set(ref(db, player + "/points"), current);
+
+      const history = await getCurrentHistory(player);
+      history.unshift({
+        fecha: formatDate(),
+        nombre: name,
+        coste: cost
+      });
+      await set(ref(db, player + "/history"), history);
+    }
+
+    // Asignar listeners a los botones de tienda
+    document.addEventListener("DOMContentLoaded", () => {
+      const items = document.querySelectorAll(".store-item");
+      items.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const player = btn.getAttribute("data-player");
+          const cost = btn.getAttribute("data-cost");
+          const name = btn.getAttribute("data-name");
+          handlePurchaseInternal(player, cost, name);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
