@@ -155,36 +155,39 @@
       gap: 6px;
     }
 
+    /* Tarjetas doradas */
     .store-item {
       border-radius: 12px;
-      border: 2px solid rgba(0,0,0,0.05);
+      border: 2px solid #b8860b;
       padding: 8px;
-      background: #fff8fc;
+      background: linear-gradient(135deg, #fff8dc, #ffd700, #ffb300);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       gap: 2px;
       transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
       font-size: 0.9rem;
+      color: #3b2b00;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.18);
     }
 
     .store-item strong { font-size: 1rem; }
 
-    /* precios dorados */
     .store-item .cost {
-      color: #ffbf00;
+      color: #3b2b00;
       font-weight: bold;
-      text-shadow: 0 0 3px #fff3b0;
+      text-shadow: 0 0 3px rgba(255,255,255,0.7);
     }
 
     .store-item:hover:not(.locked) {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      background: #ffe9f7;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+      background: linear-gradient(135deg, #fffbe5, #ffe066, #ffb300);
     }
 
     .store-item.locked {
-      opacity: 0.5;
+      opacity: 0.45;
       cursor: not-allowed;
       box-shadow: none;
     }
