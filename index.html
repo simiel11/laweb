@@ -175,10 +175,16 @@
       font-weight: bold;
     }
 
-    .store-item:hover {
+    .store-item:hover:not(.locked) {
       transform: translateY(-1px) scale(1.02);
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
       background: #ffe9f7;
+    }
+
+    .store-item.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     .history {
@@ -292,36 +298,45 @@
             <span class="cost">10 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <!-- Bloqueados -->
+          <button class="store-item locked"
                   data-player="simi"
                   data-cost="14"
-                  data-name="Brawlhalla 30 min">
-            <span><strong>Brawlhalla 30 min</strong></span>
-            <span class="cost">14 Chiquipoints</span>
+                  data-name="Brawlhalla 30 min"
+                  data-locked="true"
+                  data-required-spent="7">
+            <span><strong>🔒 Brawlhalla 30 min</strong></span>
+            <span class="cost">14 Chiquipoints (se desbloquea tras gastar 7)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="simi"
                   data-cost="50"
-                  data-name="Calistenia 40 min">
-            <span><strong>Calistenia 40 min</strong></span>
-            <span class="cost">50 Chiquipoints</span>
+                  data-name="Calistenia 40 min"
+                  data-locked="true"
+                  data-required-spent="25">
+            <span><strong>🔒 Calistenia 40 min</strong></span>
+            <span class="cost">50 Chiquipoints (se desbloquea tras gastar 25)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="simi"
                   data-cost="30"
-                  data-name="Paseo con sol 20 min">
-            <span><strong>Paseo con sol 20 min</strong></span>
-            <span class="cost">30 Chiquipoints</span>
+                  data-name="Paseo con sol"
+                  data-locked="true"
+                  data-required-spent="15">
+            <span><strong>🔒 Paseo con sol</strong></span>
+            <span class="cost">30 Chiquipoints (se desbloquea tras gastar 15)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="simi"
                   data-cost="500"
-                  data-name="6 sesiones de gym nuevas 1h y media">
-            <span><strong>6 sesiones de gym nuevas 1h y media</strong></span>
-            <span class="cost">500 Chiquipoints</span>
+                  data-name="7 sesiones de gym nuevas"
+                  data-locked="true"
+                  data-required-spent="250">
+            <span><strong>🔒 7 sesiones de gym nuevas</strong></span>
+            <span class="cost">500 Chiquipoints (se desbloquea tras gastar 250)</span>
           </button>
         </div>
       </div>
@@ -382,36 +397,45 @@
             <span class="cost">16 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <!-- Bloqueados -->
+          <button class="store-item locked"
                   data-player="modeun"
                   data-cost="30"
-                  data-name="Pokémon 1 hora">
-            <span><strong>Pokémon 1 hora</strong></span>
-            <span class="cost">30 Chiquipoints</span>
+                  data-name="Pokémon 1 hora"
+                  data-locked="true"
+                  data-required-spent="15">
+            <span><strong>🔒 Pokémon 1 hora</strong></span>
+            <span class="cost">30 Chiquipoints (se desbloquea tras gastar 15)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="modeun"
                   data-cost="45"
-                  data-name="Anime nuevo 3h">
-            <span><strong>Anime nuevo 3h</strong></span>
-            <span class="cost">45 Chiquipoints</span>
+                  data-name="Anime nuevo"
+                  data-locked="true"
+                  data-required-spent="22">
+            <span><strong>🔒 Anime nuevo</strong></span>
+            <span class="cost">45 Chiquipoints (se desbloquea tras gastar 22)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="modeun"
                   data-cost="50"
-                  data-name="Juego nuevo 3h">
-            <span><strong>Juego nuevo 3h</strong></span>
-            <span class="cost">50 Chiquipoints</span>
+                  data-name="Juego nuevo"
+                  data-locked="true"
+                  data-required-spent="25">
+            <span><strong>🔒 Juego nuevo</strong></span>
+            <span class="cost">50 Chiquipoints (se desbloquea tras gastar 25)</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item locked"
                   data-player="modeun"
                   data-cost="500"
-                  data-name="Nuevo rango TFT (30h aprox)">
-            <span><strong>Nuevo rango TFT (30h aprox)</strong></span>
-            <span class="cost">500 Chiquipoints</span>
+                  data-name="Nuevo rango TFT"
+                  data-locked="true"
+                  data-required-spent="250">
+            <span><strong>🔒 Nuevo rango TFT</strong></span>
+            <span class="cost">500 Chiquipoints (se desbloquea tras gastar 250)</span>
           </button>
         </div>
       </div>
@@ -457,7 +481,7 @@
       document.getElementById("modeun-counter").textContent = val;
     });
 
-    // Lectores en tiempo real de historiales
+    // Lectores de historiales
     onValue(ref(db, "simi/history"), (snap) => {
       const list = snap.exists() ? snap.val() : [];
       renderHistory("simi", list);
@@ -508,7 +532,32 @@
       return snap.exists() ? snap.val() : [];
     }
 
-    // Funciones globales usadas por los botones
+    async function getTotalSpent(player) {
+      const snap = await get(child(ref(db), player + "/totalSpent"));
+      return snap.exists() ? snap.val() : 0;
+    }
+
+    async function setTotalSpent(player, value) {
+      await set(ref(db, player + "/totalSpent"), value);
+    }
+
+    function checkLockedItems(player, totalSpent) {
+      const items = document.querySelectorAll(
+        `.store-item[data-player="${player}"][data-locked="true"]`
+      );
+      items.forEach(btn => {
+        const required = parseInt(btn.getAttribute("data-required-spent"), 10) || 0;
+        if (totalSpent >= required) {
+          btn.classList.remove("locked");
+          btn.disabled = false;
+        } else {
+          btn.classList.add("locked");
+          btn.disabled = true;
+        }
+      });
+    }
+
+    // Funciones globales para + / -
     window.changePoints = async function(player, delta) {
       let current = await getCurrentPoints(player);
       current += delta;
@@ -519,6 +568,8 @@
     window.clearHistory = async function(player) {
       if (!confirm("¿Seguro que quieres borrar el historial de " + player + "?")) return;
       await set(ref(db, player + "/history"), []);
+      await setTotalSpent(player, 0);
+      checkLockedItems(player, 0);
     };
 
     async function handlePurchaseInternal(player, cost, name) {
@@ -530,8 +581,12 @@
         return;
       }
 
+      let totalSpent = await getTotalSpent(player);
       current -= cost;
+      totalSpent += cost;
+
       await set(ref(db, player + "/points"), current);
+      await setTotalSpent(player, totalSpent);
 
       const history = await getCurrentHistory(player);
       history.unshift({
@@ -540,18 +595,26 @@
         coste: cost
       });
       await set(ref(db, player + "/history"), history);
+
+      checkLockedItems(player, totalSpent);
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
       const items = document.querySelectorAll(".store-item");
       items.forEach((btn) => {
         btn.addEventListener("click", () => {
+          if (btn.disabled || btn.classList.contains("locked")) return;
           const player = btn.getAttribute("data-player");
           const cost = btn.getAttribute("data-cost");
           const name = btn.getAttribute("data-name");
           handlePurchaseInternal(player, cost, name);
         });
       });
+
+      const simiSpent = await getTotalSpent("simi");
+      const modeunSpent = await getTotalSpent("modeun");
+      checkLockedItems("simi", simiSpent);
+      checkLockedItems("modeun", modeunSpent);
     });
   </script>
 </body>
