@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>La Web</title>
 
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="./favicon.png?v=1" />
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -170,9 +170,11 @@
 
     .store-item strong { font-size: 1rem; }
 
+    /* precios dorados */
     .store-item .cost {
-      color: #ff4081;
+      color: #ffbf00;
       font-weight: bold;
+      text-shadow: 0 0 3px #fff3b0;
     }
 
     .store-item:hover:not(.locked) {
@@ -470,7 +472,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Lectores en tiempo real de puntos
     onValue(ref(db, "simi/points"), (snap) => {
       const val = snap.exists() ? snap.val() : 0;
       document.getElementById("simi-counter").textContent = val;
@@ -481,7 +482,6 @@
       document.getElementById("modeun-counter").textContent = val;
     });
 
-    // Lectores de historiales
     onValue(ref(db, "simi/history"), (snap) => {
       const list = snap.exists() ? snap.val() : [];
       renderHistory("simi", list);
@@ -557,7 +557,6 @@
       });
     }
 
-    // Funciones globales para + / -
     window.changePoints = async function(player, delta) {
       let current = await getCurrentPoints(player);
       current += delta;
