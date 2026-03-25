@@ -11,8 +11,8 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Comic Sans MS", cursive;
-      background: radial-gradient(circle at top, #ffe0f0 0, #fcefee 40%, #fff 100%);
-      color: #333;
+      background: #000;
+      color: #ffd700;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -23,22 +23,22 @@
       padding: 10px 0 0;
       font-size: 2.4rem;
       letter-spacing: 2px;
-      color: #ff5c7a;
-      text-shadow: 3px 3px 0 #fff, -1px -1px 0 #ffd1e1;
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700;
     }
 
     .subtitle {
       text-align: center;
       font-size: 0.95rem;
       margin-bottom: 8px;
-      color: #666;
+      color: #ffd700;
     }
 
     .container {
       flex: 1;
       display: flex;
       flex-direction: row;
-      border-top: 4px dashed #ffd1e1;
+      border-top: 4px dashed #ffd700;
     }
 
     .panel {
@@ -49,13 +49,13 @@
     }
 
     .panel-simi {
-      background: linear-gradient(135deg, #ffe9f0, #fff5d9);
-      border-right: 3px solid #ffb6c1;
+      background: #000;
+      border-right: 3px solid #ffd700;
     }
 
     .panel-modeun {
-      background: linear-gradient(135deg, #d9f3ff, #e9e9ff);
-      border-left: 3px solid #99c2ff;
+      background: #000;
+      border-left: 3px solid #ffd700;
     }
 
     .panel-header {
@@ -77,33 +77,38 @@
 
     .panel-title {
       font-size: 1.6rem;
-      text-shadow: 1px 1px 0 #fff;
+      text-shadow: 1px 1px 0 #000;
+      color: #ffd700;
     }
 
     .panel-header small {
       display: block;
       font-size: 0.8rem;
-      color: #555;
+      color: #ffd700;
     }
 
     .counter-box {
-      background: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.9);
       border-radius: 14px;
       padding: 10px;
       margin-bottom: 12px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
 
-    .counter-label { font-weight: bold; font-size: 1rem; }
+    .counter-label { 
+      font-weight: bold; 
+      font-size: 1rem; 
+      color: #ffd700;
+    }
 
     .counter-value {
       font-size: 1.6rem;
       font-weight: bold;
-      color: #ff4081;
+      color: #ffd700;
       min-width: 50px;
       text-align: center;
     }
@@ -121,32 +126,33 @@
 
     .btn-plus {
       background: #7ed957;
-      color: #fff;
+      color: #000;
       box-shadow: 0 2px 0 #4e9c35;
     }
 
     .btn-minus {
       background: #ff9f68;
-      color: #fff;
+      color: #000;
       box-shadow: 0 2px 0 #c96c35;
     }
 
     .counter-buttons button:hover {
       transform: translateY(-1px) scale(1.03);
-      box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.8);
     }
 
     .store {
-      background: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.9);
       border-radius: 14px;
       padding: 10px;
       margin-bottom: 12px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
     }
 
     .store-title {
       font-size: 1.15rem;
       margin-bottom: 6px;
+      color: #ffd700;
     }
 
     .item-list {
@@ -155,35 +161,38 @@
       gap: 6px;
     }
 
-    /* Tarjetas doradas */
+    /* Tarjetas doradas modo VIP */
     .store-item {
       border-radius: 12px;
-      border: 2px solid #b8860b;
+      border: 2px solid #ffd700;
       padding: 8px;
-      background: linear-gradient(135deg, #fff8dc, #ffd700, #ffb300);
+      background: #000;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       gap: 2px;
-      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s, color 0.12s;
       font-size: 0.9rem;
-      color: #3b2b00;
+      color: #ffd700;
       font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
-    .store-item strong { font-size: 1rem; }
+    .store-item strong { 
+      font-size: 1rem; 
+      color: #ffd700;
+    }
 
     .store-item .cost {
-      color: #3b2b00;
+      color: #ffd700;
       font-weight: bold;
-      text-shadow: 0 0 3px rgba(255,255,255,0.7);
+      text-shadow: 0 0 5px rgba(255,215,0,0.8);
     }
 
     .store-item:hover:not(.locked) {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-      background: linear-gradient(135deg, #fffbe5, #ffe066, #ffb300);
+      box-shadow: 0 4px 8px rgba(0,0,0,1);
+      background: #111;
     }
 
     .store-item.locked {
@@ -193,10 +202,10 @@
     }
 
     .history {
-      background: rgba(255,255,255,0.92);
+      background: rgba(0,0,0,0.92);
       border-radius: 14px;
       padding: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
       max-height: 220px;
       overflow-y: auto;
     }
@@ -204,21 +213,23 @@
     .history-title {
       font-size: 1.05rem;
       margin-bottom: 4px;
+      color: #ffd700;
     }
 
     .history-list {
       list-style: none;
       font-size: 0.85rem;
+      color: #ffd700;
     }
 
     .history-list li {
       padding: 3px 0;
-      border-bottom: 1px dashed rgba(0,0,0,0.1);
+      border-bottom: 1px dashed rgba(255,215,0,0.3);
     }
 
     .history-empty {
       font-size: 0.8rem;
-      color: #777;
+      color: #ffd700;
     }
 
     .history-controls {
@@ -232,22 +243,22 @@
       padding: 3px 8px;
       font-size: 0.7rem;
       cursor: pointer;
-      background: #ddd;
-      color: #333;
+      background: #333;
+      color: #ffd700;
       transition: background 0.15s;
     }
 
-    .btn-clear:hover { background: #bbb; }
+    .btn-clear:hover { background: #555; }
 
     @media (max-width: 800px) {
       .container { flex-direction: column; }
       .panel-simi {
         border-right: none;
-        border-bottom: 3px solid #ffb6c1;
+        border-bottom: 3px solid #ffd700;
       }
       .panel-modeun {
         border-left: none;
-        border-top: 3px solid #99c2ff;
+        border-top: 3px solid #ffd700;
       }
     }
   </style>
