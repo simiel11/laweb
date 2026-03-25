@@ -11,8 +11,8 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Comic Sans MS", cursive;
-      background: #000;
-      color: #ffd700;
+      background: radial-gradient(circle at top, #ffe0f0 0, #fcefee 40%, #fff 100%);
+      color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -23,22 +23,22 @@
       padding: 10px 0 0;
       font-size: 2.4rem;
       letter-spacing: 2px;
-      color: #ffd700;
-      text-shadow: 0 0 8px #ffd700;
+      color: #ff5c7a;
+      text-shadow: 3px 3px 0 #fff, -1px -1px 0 #ffd1e1;
     }
 
     .subtitle {
       text-align: center;
       font-size: 0.95rem;
       margin-bottom: 8px;
-      color: #ffd700;
+      color: #666;
     }
 
     .container {
       flex: 1;
       display: flex;
       flex-direction: row;
-      border-top: 4px dashed #ffd700;
+      border-top: 4px dashed #ffd1e1;
     }
 
     .panel {
@@ -49,13 +49,13 @@
     }
 
     .panel-simi {
-      background: #000;
-      border-right: 3px solid #ffd700;
+      background: linear-gradient(135deg, #ffe9f0, #fff5d9);
+      border-right: 3px solid #ffb6c1;
     }
 
     .panel-modeun {
-      background: #000;
-      border-left: 3px solid #ffd700;
+      background: linear-gradient(135deg, #d9f3ff, #e9e9ff);
+      border-left: 3px solid #99c2ff;
     }
 
     .panel-header {
@@ -77,38 +77,33 @@
 
     .panel-title {
       font-size: 1.6rem;
-      text-shadow: 1px 1px 0 #000;
-      color: #ffd700;
+      text-shadow: 1px 1px 0 #fff;
     }
 
     .panel-header small {
       display: block;
       font-size: 0.8rem;
-      color: #ffd700;
+      color: #555;
     }
 
     .counter-box {
-      background: rgba(0,0,0,0.9);
+      background: rgba(255,255,255,0.9);
       border-radius: 14px;
       padding: 10px;
       margin-bottom: 12px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
 
-    .counter-label { 
-      font-weight: bold; 
-      font-size: 1rem; 
-      color: #ffd700;
-    }
+    .counter-label { font-weight: bold; font-size: 1rem; }
 
     .counter-value {
       font-size: 1.6rem;
       font-weight: bold;
-      color: #ffd700;
+      color: #ff4081;
       min-width: 50px;
       text-align: center;
     }
@@ -126,33 +121,32 @@
 
     .btn-plus {
       background: #7ed957;
-      color: #000;
+      color: #fff;
       box-shadow: 0 2px 0 #4e9c35;
     }
 
     .btn-minus {
       background: #ff9f68;
-      color: #000;
+      color: #fff;
       box-shadow: 0 2px 0 #c96c35;
     }
 
     .counter-buttons button:hover {
       transform: translateY(-1px) scale(1.03);
-      box-shadow: 0 3px 0 rgba(0,0,0,0.8);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.2);
     }
 
     .store {
-      background: rgba(0,0,0,0.9);
+      background: rgba(255,255,255,0.9);
       border-radius: 14px;
       padding: 10px;
       margin-bottom: 12px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
     }
 
     .store-title {
       font-size: 1.15rem;
       margin-bottom: 6px;
-      color: #ffd700;
     }
 
     .item-list {
@@ -161,10 +155,10 @@
       gap: 6px;
     }
 
-    /* Tarjetas doradas modo VIP */
+    /* Tarjetas doradas VIP: fondo negro + letras doradas */
     .store-item {
       border-radius: 12px;
-      border: 2px solid #ffd700;
+      border: 2px solid #b8860b;
       padding: 8px;
       background: #000;
       cursor: pointer;
@@ -175,7 +169,7 @@
       font-size: 0.9rem;
       color: #ffd700;
       font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .store-item strong { 
@@ -186,12 +180,12 @@
     .store-item .cost {
       color: #ffd700;
       font-weight: bold;
-      text-shadow: 0 0 5px rgba(255,215,0,0.8);
+      text-shadow: 0 0 4px rgba(255,215,0,0.9);
     }
 
     .store-item:hover:not(.locked) {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 4px 8px rgba(0,0,0,1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
       background: #111;
     }
 
@@ -202,10 +196,10 @@
     }
 
     .history {
-      background: rgba(0,0,0,0.92);
+      background: rgba(255,255,255,0.92);
       border-radius: 14px;
       padding: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.8);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
       max-height: 220px;
       overflow-y: auto;
     }
@@ -213,23 +207,21 @@
     .history-title {
       font-size: 1.05rem;
       margin-bottom: 4px;
-      color: #ffd700;
     }
 
     .history-list {
       list-style: none;
       font-size: 0.85rem;
-      color: #ffd700;
     }
 
     .history-list li {
       padding: 3px 0;
-      border-bottom: 1px dashed rgba(255,215,0,0.3);
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
 
     .history-empty {
       font-size: 0.8rem;
-      color: #ffd700;
+      color: #777;
     }
 
     .history-controls {
@@ -243,22 +235,22 @@
       padding: 3px 8px;
       font-size: 0.7rem;
       cursor: pointer;
-      background: #333;
-      color: #ffd700;
+      background: #ddd;
+      color: #333;
       transition: background 0.15s;
     }
 
-    .btn-clear:hover { background: #555; }
+    .btn-clear:hover { background: #bbb; }
 
     @media (max-width: 800px) {
       .container { flex-direction: column; }
       .panel-simi {
         border-right: none;
-        border-bottom: 3px solid #ffd700;
+        border-bottom: 3px solid #ffb6c1;
       }
       .panel-modeun {
         border-left: none;
-        border-top: 3px solid #ffd700;
+        border-top: 3px solid #99c2ff;
       }
     }
   </style>
