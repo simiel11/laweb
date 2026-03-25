@@ -155,12 +155,11 @@
       gap: 6px;
     }
 
-    /* Tarjetas doradas VIP: fondo negro + letras doradas */
+    /* Carteles espaciales con fondos por franja */
     .store-item {
       border-radius: 12px;
       border: 2px solid #b8860b;
       padding: 8px;
-      background: #000;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -170,23 +169,27 @@
       color: #ffd700;
       font-weight: bold;
       box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    .store-item strong { 
-      font-size: 1rem; 
-      color: #ffd700;
-    }
+    .store-item strong { font-size: 1rem; }
 
     .store-item .cost {
       color: #ffd700;
       font-weight: bold;
-      text-shadow: 0 0 4px rgba(255,215,0,0.9);
+      text-shadow: 0 0 4px rgba(0,0,0,0.8);
+    }
+
+    /* Texto legible encima del fondo */
+    .store-item span {
+      text-shadow: 0 0 4px rgba(0,0,0,0.8);
     }
 
     .store-item:hover:not(.locked) {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-      background: #111;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
 
     .store-item.locked {
@@ -194,6 +197,24 @@
       cursor: not-allowed;
       box-shadow: none;
     }
+
+    /* Fondos rosa para Simi (Clarence) */
+    .store-item.simi-bg-1 { background-image: url("img/rosa_clean_slice_1.png"); }
+    .store-item.simi-bg-2 { background-image: url("img/rosa_clean_slice_2.png"); }
+    .store-item.simi-bg-3 { background-image: url("img/rosa_clean_slice_3.png"); }
+    .store-item.simi-bg-4 { background-image: url("img/rosa_clean_slice_4.png"); }
+    .store-item.simi-bg-5 { background-image: url("img/rosa_clean_slice_5.png"); }
+    .store-item.simi-bg-6 { background-image: url("img/rosa_clean_slice_6.png"); }
+    .store-item.simi-bg-7 { background-image: url("img/rosa_clean_slice_7.png"); }
+
+    /* Fondos azul para Modeun (Gumball) */
+    .store-item.modeun-bg-1 { background-image: url("img/azul_clean_slice_1.png"); }
+    .store-item.modeun-bg-2 { background-image: url("img/azul_clean_slice_2.png"); }
+    .store-item.modeun-bg-3 { background-image: url("img/azul_clean_slice_3.png"); }
+    .store-item.modeun-bg-4 { background-image: url("img/azul_clean_slice_4.png"); }
+    .store-item.modeun-bg-5 { background-image: url("img/azul_clean_slice_5.png"); }
+    .store-item.modeun-bg-6 { background-image: url("img/azul_clean_slice_6.png"); }
+    .store-item.modeun-bg-7 { background-image: url("img/azul_clean_slice_7.png"); }
 
     .history {
       background: rgba(255,255,255,0.92);
@@ -282,7 +303,7 @@
       <div class="store">
         <div class="store-title">Tienda de Simi</div>
         <div class="item-list">
-          <button class="store-item"
+          <button class="store-item simi-bg-1"
                   data-player="simi"
                   data-cost="8"
                   data-name="GGST 30 min">
@@ -290,7 +311,7 @@
             <span class="cost">8 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item simi-bg-2"
                   data-player="simi"
                   data-cost="10"
                   data-name="Sp3 / EtG 30 min">
@@ -298,7 +319,7 @@
             <span class="cost">10 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item simi-bg-3"
                   data-player="simi"
                   data-cost="12"
                   data-name="Rocket League 30 min">
@@ -307,7 +328,7 @@
           </button>
 
           <!-- Bloqueados -->
-          <button class="store-item locked"
+          <button class="store-item locked simi-bg-4"
                   data-player="simi"
                   data-cost="14"
                   data-name="Brawlhalla 30 min"
@@ -317,7 +338,7 @@
             <span class="cost">14 Chiquipoints (se desbloquea tras gastar 7)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked simi-bg-5"
                   data-player="simi"
                   data-cost="50"
                   data-name="Calistenia 40 min"
@@ -327,7 +348,7 @@
             <span class="cost">50 Chiquipoints (se desbloquea tras gastar 25)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked simi-bg-6"
                   data-player="simi"
                   data-cost="30"
                   data-name="Paseo con sol 20 min"
@@ -337,7 +358,7 @@
             <span class="cost">30 Chiquipoints (se desbloquea tras gastar 15)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked simi-bg-7"
                   data-player="simi"
                   data-cost="500"
                   data-name="7 sesiones de gym nuevas"
@@ -381,7 +402,7 @@
       <div class="store">
         <div class="store-title">Tienda de Modeun</div>
         <div class="item-list">
-          <button class="store-item"
+          <button class="store-item modeun-bg-1"
                   data-player="modeun"
                   data-cost="10"
                   data-name="Minecraft Dungeons 30 min">
@@ -389,7 +410,7 @@
             <span class="cost">10 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item modeun-bg-2"
                   data-player="modeun"
                   data-cost="12"
                   data-name="Monster Hunter 30 min">
@@ -397,7 +418,7 @@
             <span class="cost">12 Chiquipoints</span>
           </button>
 
-          <button class="store-item"
+          <button class="store-item modeun-bg-3"
                   data-player="modeun"
                   data-cost="14"
                   data-name="Juego de cartas 30 min">
@@ -406,7 +427,7 @@
           </button>
 
           <!-- Bloqueados -->
-          <button class="store-item locked"
+          <button class="store-item locked modeun-bg-4"
                   data-player="modeun"
                   data-cost="30"
                   data-name="Pokémon 1 hora"
@@ -416,7 +437,7 @@
             <span class="cost">30 Chiquipoints (se desbloquea tras gastar 15)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked modeun-bg-5"
                   data-player="modeun"
                   data-cost="45"
                   data-name="Anime nuevo 3h"
@@ -426,7 +447,7 @@
             <span class="cost">45 Chiquipoints (se desbloquea tras gastar 22)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked modeun-bg-6"
                   data-player="modeun"
                   data-cost="60"
                   data-name="Juego nuevo 3h (modo historia)"
@@ -436,7 +457,7 @@
             <span class="cost">50 Chiquipoints (se desbloquea tras gastar 25)</span>
           </button>
 
-          <button class="store-item locked"
+          <button class="store-item locked modeun-bg-7"
                   data-player="modeun"
                   data-cost="500"
                   data-name="Nuevo rango TFT"
