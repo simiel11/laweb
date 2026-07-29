@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>La Web</title>
+  <link rel="icon" type="image/png" href="./favicon.png?v=1" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Comic Sans MS", cursive;
+      background: radial-gradient(circle at top, #ffe0f0 0, #fcefee 40%, #fff 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 10px 0 0;
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+      color: #ff5c7a;
+      text-shadow: 3px 3px 0 #fff, -1px -1px 0 #ffd1e1;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      color: #666;
+    }
+
+    .timer-box {
+      margin: 4px auto 10px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+      width: fit-content;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .timer-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #ef4444; /* rojo */
+      margin-bottom: 4px;
+      letter-spacing: 0.8px;
+    }
+
+    .timer-values {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      border-top: 4px dashed #ffd1e1;
+    }
+
+    .panel {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .panel-simi {
+      background: linear-gradient(135deg, #ffe9f0, #fff5d9);
+      border-right: 3px solid #ffb6c1;
+    }
+
+    .panel-modeun {
+      background: linear-gradient(135deg, #d9f3ff, #e9e9ff);
+      border-left: 3px solid #99c2ff;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-header img.avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.95);
+      box-shadow: 0 0 8px rgba(0,0,0,0.25);
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .panel-header-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .panel-header-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .panel-title {
+      font-size: 1.6rem;
+      text-shadow: 1px 1px 0 #fff;
+      line-height: 1.1;
+    }
+
+    .panel-header small {
+      display: block;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .header-stickers {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .header-sticker {
+      width: 81px;
+      height: 81px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
+    }
+
+    .counter-box {
+      background: rgba(255,255,255,0.9);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .counter-label {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .counter-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #ff4081;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .counter-buttons button,
+    .top-btn,
+    .btn-clear,
+    .modal-close,
+    .delete-x {
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s, opacity 0.15s;
+    }
+
+    .counter-buttons button {
+      border-radius: 10px;
+      padding: 6px 10px;
+      margin-left: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .btn-plus {
+      background: #7ed957;
+      color: #fff;
+      box-shadow: 0 2px 0 #4e9c35;
+    }
+
+    .btn-minus {
+      background: #ff9f68;
+      color: #fff;
+      box-shadow: 0 2px 0 #c96c35;
+    }
+
+    .counter-buttons button:hover,
+    .top-btn:hover,
+    .btn-clear:hover,
+    .modal-close:hover,
+    .delete-x:hover {
+      transform: translateY(-1px) scale(1.04);
+    }
+
+    .store {
+      background: rgba(255,255,255,0.9);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    }
+
+    .store-title {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .top-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .top-btn {
+      width: 100%;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #fff;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.18);
+    }
+
+    .btn-custom-buy {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    }
+
+    .btn-create-item {
+      background: linear-gradient(135deg, #10b981, #14b8a6);
+    }
+
+    .btn-log {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+    }
+
+    .item-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .store-card {
+      border-radius: 12px;
+      border: 2px solid #b8860b;
+      padding: 10px;
+      transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+      font-size: 0.9rem;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      min-height: 84px;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .store-card.locked {
+      opacity: 0.45;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .store-card:hover:not(.locked) {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .store-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding-right: 28px;
+    }
+
+    .store-card-text strong {
+      font-size: 1rem;
+      color: #ffffff;
+      text-shadow: 0 0 4px rgba(0,0,0,0.8);
+    }
+
+    .store-card-text span {
+      text-shadow: 0 0 4px rgba(0,0,0,0.8);
+    }
+
+    .cost {
+      color: #ffe4f8;
+      font-weight: bold;
+    }
+
+    .delete-x {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ef4444;
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.8rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      z-index: 2;
+    }
+
+    .delete-x:hover {
+      background: #dc2626;
+    }
+
+    .store-card.simi-bg-1 { background-image: url("./img/rosa_clean_slice_1.png"); }
+    .store-card.simi-bg-2 { background-image: url("./img/rosa_clean_slice_2.png"); }
+    .store-card.simi-bg-3 { background-image: url("./img/rosa_clean_slice_3.png"); }
+    .store-card.simi-bg-4 { background-image: url("./img/rosa_clean_slice_4.png"); }
+    .store-card.simi-bg-5 { background-image: url("./img/rosa_clean_slice_5.png"); }
+    .store-card.simi-bg-6 { background-image: url("./img/rosa_clean_slice_6.png"); }
+    .store-card.simi-bg-7 { background-image: url("./img/rosa_clean_slice_7.png"); }
+
+    .store-card.modeun-bg-1 { background-image: url("./img/azul_clean_slice_1.png"); }
+    .store-card.modeun-bg-2 { background-image: url("./img/azul_clean_slice_2.png"); }
+    .store-card.modeun-bg-3 { background-image: url("./img/azul_clean_slice_3.png"); }
+    .store-card.modeun-bg-4 { background-image: url("./img/azul_clean_slice_4.png"); }
+    .store-card.modeun-bg-5 { background-image: url("./img/azul_clean_slice_5.png"); }
+    .store-card.modeun-bg-6 { background-image: url("./img/azul_clean_slice_6.png"); }
+    .store-card.modeun-bg-7 { background-image: url("./img/azul_clean_slice_7.png"); }
+
+    .store-card.custom-simi {
+      background-image:
+        linear-gradient(135deg, rgba(109, 40, 140, 0.78), rgba(255, 85, 130, 0.78)),
+        url("./img/rosa_clean_slice_2.png");
+      border-color: #fff2a8;
+    }
+
+    .store-card.custom-modeun {
+      background-image:
+        linear-gradient(135deg, rgba(26, 90, 180, 0.78), rgba(95, 75, 220, 0.78)),
+        url("./img/azul_clean_slice_2.png");
+      border-color: #fff2a8;
+    }
+
+    .store-empty {
+      font-size: 0.9rem;
+      color: #666;
+      background: rgba(255,255,255,0.7);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .history {
+      background: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .history-title {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .history-list {
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .history-list li {
+      padding: 3px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .history-empty {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .history-controls {
+      text-align: right;
+      margin-bottom: 4px;
+    }
+
+    .btn-clear {
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      background: #ddd;
+      color: #333;
+    }
+
+    .btn-clear:hover {
+      background: #bbb;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(760px, 100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      background: linear-gradient(135deg, #fff7fb, #fffdf5);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      border: 3px solid #ffd1e1;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff4d88;
+    }
+
+    .modal-close {
+      background: #eee;
+      color: #333;
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-weight: bold;
+    }
+
+    .modal-text {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .log-box {
+      background: rgba(255,255,255,0.95);
+      border-radius: 14px;
+      padding: 12px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    }
+
+    .log-entry {
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.12);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .log-date {
+      color: #666;
+      font-size: 0.82rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .log-created {
+      color: #0f766e;
+      font-weight: bold;
+    }
+
+    .log-deleted {
+      color: #b91c1c;
+      font-weight: bold;
+    }
+
+    .log-empty {
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .panel-simi {
+        border-right: none;
+        border-bottom: 3px solid #ffb6c1;
+      }
+
+      .panel-modeun {
+        border-left: none;
+        border-top: 3px solid #99c2ff;
+      }
+
+      .top-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .panel-header-info {
+        gap: 8px;
+      }
+
+      .panel-title {
+        font-size: 1.25rem;
+      }
+
+      .header-stickers {
+        gap: 4px;
+      }
+
+      .header-sticker {
+        width: 63px;
+        height: 63px;
+      }
+
+      .counter-box {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>La Web</h1>
+  <p class="subtitle">Chiquipoints de Simi y Modeun</p>
+
+  <div class="timer-box">
+    <div class="timer-title">TIEMPO RESTANTE</div>
+    <div class="timer-values" id="timer-remaining">
+      14 días · 0 horas · 0 minutos · 0 segundos
+    </div>
+  </div>
+
+  <div class="container">
+    <section class="panel panel-simi">
+      <div class="panel-header">
+        <img class="avatar" src="./clarence.jpg" alt="Clarence / Simi" />
+        <div class="panel-header-info">
+          <div class="panel-header-text">
+            <div class="panel-title">Simi · Mundo Clarence</div>
+            <small>Haz clic en la tienda para canjear Chiquipoints</small>
+          </div>
+          <div class="header-stickers">
+ 
+            <img class="header-sticker" src="./killua.png" alt="Sticker de Killua" />
+            <img class="header-sticker" src="./chipp.png" alt="Sticker de Chipp" />
+          </div>
+        </div>
+      </div>
+
+      <div class="counter-box">
+        <div class="counter-label">Chiquipoints de Simi:</div>
+        <div class="counter-value" id="simi-counter">0</div>
+        <div class="counter-buttons">
+          <button class="btn-plus" onclick="changePoints('simi', 1)">+1</button>
+          <button class="btn-minus" onclick="changePoints('simi', -1)">−1</button>
+        </div>
+      </div>
+
+      <div class="store">
+        <div class="store-title">Tienda de Simi</div>
+
+        <div class="top-actions">
+          <button class="top-btn btn-custom-buy" onclick="customPurchase('simi')">Compra personalizada</button>
+          <button class="top-btn btn-create-item" onclick="createStoreItem('simi')">Crear cartel</button>
+          <button class="top-btn btn-log" onclick="openStoreLog('simi')">Registro tienda</button>
+        </div>
+
+        <div class="item-list" id="simi-store-items"></div>
+        <div class="store-empty" id="simi-store-empty">No hay carteles disponibles.</div>
+      </div>
+
+      <div class="history">
+        <div class="history-controls">
+          <button class="btn-clear" onclick="clearHistory('simi')">Borrar historial</button>
+        </div>
+        <div class="history-title">Historial de Simi</div>
+        <ul class="history-list" id="simi-history"></ul>
+        <div class="history-empty" id="simi-history-empty">Todavía no hay compras.</div>
+      </div>
+    </section>
+
+    <section class="panel panel-modeun">
+      <div class="panel-header">
+        <img class="avatar" src="./gumball.jpg" alt="Gumball / Modeun" />
+        <div class="panel-header-info">
+          <div class="panel-header-text">
+            <div class="panel-title">Modeun · Mundo Gumball</div>
+            <small>Haz clic en la tienda para canjear Chiquipoints</small>
+          </div>
+          <div class="header-stickers">
+            <img class="header-sticker" src="./gon.png" alt="Sticker de Gon" />
+            <img class="header-sticker" src="./may.png" alt="Sticker de May" />
+          </div>
+        </div>
+      </div>
+
+      <div class="counter-box">
+        <div class="counter-label">Chiquipoints de Modeun:</div>
+        <div class="counter-value" id="modeun-counter">0</div>
+        <div class="counter-buttons">
+          <button class="btn-plus" onclick="changePoints('modeun', 1)">+1</button>
+          <button class="btn-minus" onclick="changePoints('modeun', -1)">−1</button>
+        </div>
+      </div>
+
+      <div class="store">
+        <div class="store-title">Tienda de Modeun</div>
+
+        <div class="top-actions">
+          <button class="top-btn btn-custom-buy" onclick="customPurchase('modeun')">Compra personalizada</button>
+          <button class="top-btn btn-create-item" onclick="createStoreItem('modeun')">Crear cartel</button>
+          <button class="top-btn btn-log" onclick="openStoreLog('modeun')">Registro tienda</button>
+        </div>
+
+        <div class="item-list" id="modeun-store-items"></div>
+        <div class="store-empty" id="modeun-store-empty">No hay carteles disponibles.</div>
+      </div>
+
+      <div class="history">
+        <div class="history-controls">
+          <button class="btn-clear" onclick="clearHistory('modeun')">Borrar historial</button>
+        </div>
+        <div class="history-title">Historial de Modeun</div>
+        <ul class="history-list" id="modeun-history"></ul>
+        <div class="history-empty" id="modeun-history-empty">Todavía no hay compras.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay" id="log-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="log-modal-title">Registro de tienda</div>
+        <button class="modal-close" onclick="closeStoreLog()">Cerrar</button>
+      </div>
+      <div class="modal-text" id="log-modal-text"></div>
+      <div class="log-box" id="log-modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUe4fZVAZipiuqFAPQCJ0FqOIrZJFE908",
+      authDomain: "la-web-d9f4e.firebaseapp.com",
+      databaseURL: "https://la-web-d9f4e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "la-web-d9f4e",
+      storageBucket: "la-web-d9f4e.firebasestorage.app",
+      messagingSenderId: "133048092874",
+      appId: "1:133048092874:web:b611c14e29651f23e44c33",
+      measurementId: "G-7FSVPK5QMP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const ACCESS_PASSWORD = "1155";
+    let isLoggedIn = false;
+    let currentLogPlayer = null;
+
+    const defaultStoreItems = {
+      simi: [
+        { id: "simi-base-1", name: "GGST 30 min", cost: 8, locked: false, requiredSpent: 0, styleClass: "simi-bg-1", custom: false },
+        { id: "simi-base-2", name: "Sp3 / EtG 30 min", cost: 10, locked: false, requiredSpent: 0, styleClass: "simi-bg-2", custom: false },
+        { id: "simi-base-3", name: "Rocket League 30 min", cost: 12, locked: false, requiredSpent: 0, styleClass: "simi-bg-3", custom: false },
+        { id: "simi-base-4", name: "Brawlhalla 30 min", cost: 14, locked: true, requiredSpent: 7, styleClass: "simi-bg-4", custom: false },
+        { id: "simi-base-5", name: "Calistenia 40 min", cost: 50, locked: true, requiredSpent: 25, styleClass: "simi-bg-5", custom: false },
+        { id: "simi-base-6", name: "Paseo con sol 20 min", cost: 30, locked: true, requiredSpent: 15, styleClass: "simi-bg-6", custom: false },
+        { id: "simi-base-7", name: "7 sesiones de gym nuevas (1h y media)", cost: 500, locked: true, requiredSpent: 250, styleClass: "simi-bg-7", custom: false }
+      ],
+      modeun: [
+        { id: "modeun-base-1", name: "Minecraft Dungeons 30 min", cost: 10, locked: false, requiredSpent: 0, styleClass: "modeun-bg-1", custom: false },
+        { id: "modeun-base-2", name: "Monster Hunter 30 min", cost: 12, locked: false, requiredSpent: 0, styleClass: "modeun-bg-2", custom: false },
+        { id: "modeun-base-3", name: "Juego de cartas 30 min", cost: 14, locked: false, requiredSpent: 0, styleClass: "modeun-bg-3", custom: false },
+        { id: "modeun-base-4", name: "Pokémon 1 hora", cost: 30, locked: true, requiredSpent: 15, styleClass: "modeun-bg-4", custom: false },
+        { id: "modeun-base-5", name: "Anime nuevo 3h", cost: 45, locked: true, requiredSpent: 22, styleClass: "modeun-bg-5", custom: false },
+        { id: "modeun-base-6", name: "Juego nuevo 3h (modo historia)", cost: 50, locked: true, requiredSpent: 25, styleClass: "modeun-bg-6", custom: false },
+        { id: "modeun-base-7", name: "Nuevo rango TFT (30 horas aprox)", cost: 500, locked: true, requiredSpent: 250, styleClass: "modeun-bg-7", custom: false }
+      ]
+    };
+
+    function formatDate() {
+      const now = new Date();
+      const dia = String(now.getDate()).padStart(2, "0");
+      const mes = String(now.getMonth() + 1).padStart(2, "0");
+      const anio = now.getFullYear();
+      const hora = String(now.getHours()).padStart(2, "0");
+      const min = String(now.getMinutes()).padStart(2, "0");
+      return `${dia}/${mes}/${anio} ${hora}:${min}`;
+    }
+
+    function generateId() {
+      return Date.now().toString() + "-" + Math.random().toString(36).slice(2, 9);
+    }
+
+    async function requireLogin() {
+      if (isLoggedIn) return true;
+
+      const entered = prompt("Introduce la contraseña para continuar:");
+      if (entered === null) return false;
+
+      if (entered === ACCESS_PASSWORD) {
+        isLoggedIn = true;
+        alert("Sesión iniciada correctamente.");
+        return true;
+      }
+
+      alert("Contraseña incorrecta.");
+      return false;
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function getCurrentPoints(player) {
+      const snap = await get(child(ref(db), player + "/points"));
+      return snap.exists() ? snap.val() : 0;
+    }
+
+    async function getCurrentHistory(player) {
+      const snap = await get(child(ref(db), player + "/history"));
+      return snap.exists() ? snap.val() : [];
+    }
+
+    async function getTotalSpent(player) {
+      const snap = await get(child(ref(db), player + "/totalSpent"));
+      return snap.exists() ? snap.val() : 0;
+    }
+
+    async function setTotalSpent(player, value) {
+      await set(ref(db, player + "/totalSpent"), value);
+    }
+
+    async function getStoreItems(player) {
+      const snap = await get(child(ref(db), player + "/storeItems"));
+      return snap.exists() ? snap.val() : [];
+    }
+
+    async function setStoreItems(player, items) {
+      await set(ref(db, player + "/storeItems"), items);
+    }
+
+    async function getStoreLog(player) {
+      const snap = await get(child(ref(db), player + "/storeLog"));
+      return snap.exists() ? snap.val() : [];
+    }
+
+    async function setStoreLog(player, log) {
+      await set(ref(db, player + "/storeLog"), log);
+    }
+
+    async function addStoreLogEntry(player, type, name, cost) {
+      const log = await getStoreLog(player);
+      log.unshift({
+        fecha: formatDate(),
+        tipo: type,
+        nombre: name,
+        coste: cost
+      });
+      await setStoreLog(player, log);
+    }
+
+    async function initializeStoreIfNeeded(player) {
+      const items = await getStoreItems(player);
+      if (!items || items.length === 0) {
+        await setStoreItems(player, defaultStoreItems[player]);
+      }
+    }
+
+    function renderHistory(player, history) {
+      const listId = player === "simi" ? "simi-history" : "modeun-history";
+      const emptyId = player === "simi" ? "simi-history-empty" : "modeun-history-empty";
+      const ul = document.getElementById(listId);
+      const empty = document.getElementById(emptyId);
+
+      ul.innerHTML = "";
+
+      if (!history || history.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+
+      history.forEach((entry) => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.fecha} · ${entry.nombre} (-${entry.coste} puntos)`;
+        ul.appendChild(li);
+      });
+    }
+
+    function isItemUnlocked(item, totalSpent) {
+      if (!item.locked) return true;
+      const required = parseInt(item.requiredSpent || 0, 10);
+      return totalSpent >= required;
+    }
+
+    function renderStoreItems(player, items, totalSpent) {
+      const containerId = player === "simi" ? "simi-store-items" : "modeun-store-items";
+      const emptyId = player === "simi" ? "simi-store-empty" : "modeun-store-empty";
+      const container = document.getElementById(containerId);
+      const empty = document.getElementById(emptyId);
+
+      container.innerHTML = "";
+
+      if (!items || items.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+
+      items.forEach((item) => {
+        const unlocked = isItemUnlocked(item, totalSpent);
+        const customClass = item.custom ? (player === "simi" ? "custom-simi" : "custom-modeun") : item.styleClass || "";
+        const card = document.createElement("div");
+        card.className = `store-card ${customClass} ${unlocked ? "" : "locked"}`;
+
+        const lockText = !unlocked
+          ? `${item.cost} Chiquipoints (se desbloquea tras gastar ${item.requiredSpent || 0})`
+          : `${item.cost} Chiquipoints`;
+
+        const title = !unlocked ? `🔒 ${item.name}` : item.name;
+
+        card.innerHTML = `
+          <button class="delete-x" type="button" aria-label="Borrar cartel">✕</button>
+          <div class="store-card-text">
+            <span><strong>${escapeHtml(title)}</strong></span>
+            <span class="cost">${escapeHtml(lockText)}</span>
+            ${item.custom ? `<span>Cartel creado desde la web</span>` : ``}
+          </div>
+        `;
+
+        const deleteBtn = card.querySelector(".delete-x");
+
+        card.addEventListener("click", () => {
+          if (!unlocked) return;
+          handlePurchaseInternal(player, item.cost, item.name);
+        });
+
+        deleteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteStoreItem(player, item.id);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderStoreLog(player, log) {
+      const title = document.getElementById("log-modal-title");
+      const text = document.getElementById("log-modal-text");
+      const content = document.getElementById("log-modal-content");
+
+      title.textContent = player === "simi" ? "Registro de tienda · Simi" : "Registro de tienda · Modeun";
+      text.textContent = "Aquí queda guardado todo lo que alguna vez se creó o se borró de la tienda.";
+
+      content.innerHTML = "";
+
+      if (!log || log.length === 0) {
+        content.innerHTML = `<div class="log-empty">Todavía no hay movimientos registrados en esta tienda.</div>`;
+        return;
+      }
+
+      log.forEach((entry) => {
+        const div = document.createElement("div");
+        div.className = "log-entry";
+
+        const actionClass = entry.tipo === "creado" ? "log-created" : "log-deleted";
+        const actionText = entry.tipo === "creado" ? "Creado" : "Eliminado";
+
+        div.innerHTML = `
+          <span class="log-date">${escapeHtml(entry.fecha)}</span>
+          <span class="${actionClass}">${actionText}</span> ·
+          <strong>${escapeHtml(entry.nombre)}</strong>
+          · ${entry.coste} Chiquipoints
+        `;
+
+        content.appendChild(div);
+      });
+    }
+
+    window.changePoints = async function(player, delta) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      let current = await getCurrentPoints(player);
+      current += delta;
+      if (current < 0) current = 0;
+      await set(ref(db, player + "/points"), current);
+    };
+
+    window.clearHistory = async function(player) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      if (!confirm("¿Seguro que quieres borrar el historial de " + player + "?")) return;
+      await set(ref(db, player + "/history"), []);
+      await setTotalSpent(player, 0);
+    };
+
+    async function handlePurchaseInternal(player, cost, name) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      let current = await getCurrentPoints(player);
+      cost = parseInt(cost, 10);
+
+      if (isNaN(cost) || cost <= 0) {
+        alert("El coste debe ser un número mayor que 0.");
+        return;
+      }
+
+      if (!name || !name.trim()) {
+        alert("Debes indicar un nombre para la compra.");
+        return;
+      }
+      if (current < cost) {
+        alert("No hay suficientes Chiquipoints para comprar \"" + name + "\".");
+        return;
+      }
+
+      let totalSpent = await getTotalSpent(player);
+      current -= cost;
+      totalSpent += cost;
+
+      await set(ref(db, player + "/points"), current);
+      await setTotalSpent(player, totalSpent);
+
+      const history = await getCurrentHistory(player);
+      history.unshift({
+        fecha: formatDate(),
+        nombre: name.trim(),
+        coste: cost
+      });
+      await set(ref(db, player + "/history"), history);
+    }
+
+    window.customPurchase = async function(player) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      const name = prompt("¿Qué has comprado?");
+      if (name === null) return;
+      if (!name.trim()) {
+        alert("Debes escribir un nombre para la compra.");
+        return;
+      }
+
+      const costInput = prompt("¿Cuántos Chiquipoints quieres gastar?");
+      if (costInput === null) return;
+
+      const cost = parseInt(costInput, 10);
+
+      if (isNaN(cost) || cost <= 0) {
+        alert("Debes introducir un número válido mayor que 0.");
+        return;
+      }
+
+      await handlePurchaseInternal(player, cost, name.trim());
+    };
+
+    window.createStoreItem = async function(player) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      const name = prompt("Escribe el nombre del cartel que quieres crear:");
+      if (name === null) return;
+      if (!name.trim()) {
+        alert("Debes escribir un nombre para el cartel.");
+        return;
+      }
+
+      const costInput = prompt("¿Cuántos Chiquipoints costará?");
+      if (costInput === null) return;
+
+      const cost = parseInt(costInput, 10);
+      if (isNaN(cost) || cost <= 0) {
+        alert("Debes introducir un número válido mayor que 0.");
+        return;
+      }
+
+      const items = await getStoreItems(player);
+      items.unshift({
+        id: generateId(),
+        name: name.trim(),
+        cost: cost,
+        locked: false,
+        requiredSpent: 0,
+        styleClass: "",
+        custom: true,
+        createdAt: formatDate()
+      });
+
+      await setStoreItems(player, items);
+      await addStoreLogEntry(player, "creado", name.trim(), cost);
+    };
+
+    async function deleteStoreItem(player, itemId) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      const items = await getStoreItems(player);
+      const item = items.find(x => x.id === itemId);
+      if (!item) return;
+
+      const ok = confirm("¿Seguro que quieres borrar este cartel?");
+      if (!ok) return;
+
+      const filtered = items.filter(x => x.id !== itemId);
+      await setStoreItems(player, filtered);
+      await addStoreLogEntry(player, "eliminado", item.name, item.cost);
+
+      if (currentLogPlayer === player) {
+        const updatedLog = await getStoreLog(player);
+        renderStoreLog(player, updatedLog);
+      }
+    }
+
+    window.openStoreLog = async function(player) {
+      const allowed = await requireLogin();
+      if (!allowed) return;
+
+      currentLogPlayer = player;
+      const log = await getStoreLog(player);
+      renderStoreLog(player, log);
+      document.getElementById("log-overlay").classList.add("show");
+    };
+
+    window.closeStoreLog = function() {
+      document.getElementById("log-overlay").classList.remove("show");
+      currentLogPlayer = null;
+    };
+
+    document.getElementById("log-overlay").addEventListener("click", (e) => {
+      if (e.target.id === "log-overlay") closeStoreLog();
+    });
+
+    onValue(ref(db, "simi/points"), (snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      document.getElementById("simi-counter").textContent = val;
+    });
+
+    onValue(ref(db, "modeun/points"), (snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      document.getElementById("modeun-counter").textContent = val;
+    });
+
+    onValue(ref(db, "simi/history"), (snap) => {
+      const list = snap.exists() ? snap.val() : [];
+      renderHistory("simi", list);
+    });
+
+    onValue(ref(db, "modeun/history"), (snap) => {
+      const list = snap.exists() ? snap.val() : [];
+      renderHistory("modeun", list);
+    });
+
+    onValue(ref(db, "simi/storeItems"), async (snap) => {
+      const items = snap.exists() ? snap.val() : [];
+      const spent = await getTotalSpent("simi");
+      renderStoreItems("simi", items, spent);
+    });
+
+    onValue(ref(db, "modeun/storeItems"), async (snap) => {
+      const items = snap.exists() ? snap.val() : [];
+      const spent = await getTotalSpent("modeun");
+      renderStoreItems("modeun", items, spent);
+    });
+
+    // ===== Temporizador de 14 días =====
+    function startCountdown() {
+  // Fecha de inicio exacta: 29/07/2026 23:15 CEST
+  // Usamos una fecha base y sumamos 7 días.
+  const start = new Date(2026, 6, 29, 23, 15); // mes 6 = julio (0-based)
+  const durationMs = 7 * 24 * 60 * 60 * 1000; // 7 días
+  const end = new Date(start.getTime() + durationMs);
+
+  const timerEl = document.getElementById("timer-remaining");
+  if (!timerEl) return;
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = end.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      timerEl.textContent = "0 días · 0 horas · 0 minutos · 0 segundos";
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    timerEl.textContent =
+      `${days} días · ${hours} horas · ${minutes} minutos · ${seconds} segundos`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      await initializeStoreIfNeeded("simi");
+      await initializeStoreIfNeeded("modeun");
+
+      const simiSpent = await getTotalSpent("simi");
+      const modeunSpent = await getTotalSpent("modeun");
+      const simiItems = await getStoreItems("simi");
+      const modeunItems = await getStoreItems("modeun");
+
+      renderStoreItems("simi", simiItems, simiSpent);
+      renderStoreItems("modeun", modeunItems, modeunSpent);
+
+      // Iniciar temporizador de 14 días
+      startCountdown();
+    });
+  </script>
+</body>
+</html>
+      
